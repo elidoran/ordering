@@ -17,7 +17,7 @@ to other contributed objects.
 
 ## Usage
 
-[JavaScript Usage Example](https://www.npmjs.com/package/ordering#javascript-style-usage)
+[JavaScript Usage Example](#javascript-style-usage)
 
 ```coffeescript
     # get it

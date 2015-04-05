@@ -17,6 +17,8 @@ to other contributed objects.
 
 ## Usage
 
+[JavaScript Usage Example](https://www.npmjs.com/package/ordering#javascript-style-usage)
+
 ```coffeescript
     # get it
     ordering = require 'ordering'
@@ -170,3 +172,47 @@ which are far more valuable than simply sorting an array by a property value.
 
 
 ## MIT License
+
+
+## JavaScript Style Usage
+
+```javascript
+ordering = require('ordering');
+
+func1 = function() { return console.log('I am a function'); };
+
+func2 = function() { return console.log('Me too!'); };
+
+func3 = function() { return console.log('Me three!!!'); };
+
+func4 = function() { return console.log('enough already'); };
+
+array = [func4, func2, func3, func1];
+
+func1.index = 100;
+
+func2.index = 200;
+
+func3.index = 300;
+
+func4.index = 400;
+
+sorted = ordering.order({ method: 'numeric', array: array });
+
+isNow = [func1, func2, func3, func4];
+
+func5 = function() { return console.log('contributed function'); };
+
+func5.index = 150;
+
+func6 = function() { return console.log('another contribution'); };
+
+func6.index = 325;
+
+array.push(func5, func6);
+
+sorted = ordering.order({ method: 'numeric', array: array });
+
+isNow = [func1, func5, func2, func3, func6, func4];
+
+```

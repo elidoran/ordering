@@ -1,4 +1,5 @@
-# ordering [![Build Status](https://travis-ci.org/elidoran/ordering.svg?branch=master)](https://travis-ci.org/elidoran/ordering)
+# ordering
+[![Build Status](https://travis-ci.org/elidoran/ordering.svg?branch=master)](https://travis-ci.org/elidoran/ordering)
 [![Dependency Status](https://gemnasium.com/elidoran/ordering.png)](https://gemnasium.com/elidoran/ordering)
 [![npm version](https://badge.fury.io/js/ordering.svg)](http://badge.fury.io/js/ordering)
 

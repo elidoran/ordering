@@ -1,4 +1,4 @@
-# ordering
+# ordering [![Build Status](https://travis-ci.org/elidoran/ordering.svg?branch=master)](https://travis-ci.org/elidoran/ordering)
 
 NOTE:
 I have yet to implement the main feature I am heading for. Which is order

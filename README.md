@@ -90,11 +90,11 @@ When successfully ordered a result object is returned.
 ```coffeescript
 {
   sorted: []      # the sorted results in a new array
-  options:        # the options provided to the call
+  options: {}     # the options provided to the call
   # The below values *may* be there
-  error: String   # a non-fatal error which occurred
-  type: String    # the type of the non-fatal error
-  warning: String # an extra warning message
+  error: string   # a non-fatal error which occurred
+  type: string    # the type of the non-fatal error
+  warning: string # an extra warning message
 }
 ```
 
@@ -102,13 +102,13 @@ When successfully ordered a result object is returned.
 
 ```coffeescript
 {
-  options:        # the options provided to the call
-  error: string   # a non-fatal error which occurred
-  type: string    # the type of the non-fatal error
-  warning: string # an extra warning message
-  index: number   # index in the source array where null was encountered
+  options:         # the options provided to the call
+  error: string    # a non-fatal error which occurred
+  type: string     # the type of the non-fatal error
+  warning: string  # an extra warning message
+  index: number    # index in the source array where null was encountered
   # not sure if i'll make this link to each other, or put an array here...
-  previousError   # a non-fatal error which occurred before the fatal one
+  previousError {} # a non-fatal error which occurred before the fatal one
 }
 ```
 
@@ -136,7 +136,7 @@ setting new functions in their place.
 ### Options:
 
 key       |  type    | use
----------------------------
+---------:|:---------|:----------
 array     | Array    | the array containing
 method    | String   | sorter or iterator or alpha or numeric *[1]*
 sortBy    | String   | name of the field on the object to use for ordering (orderBy?)

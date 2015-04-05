@@ -1,6 +1,6 @@
 {
   "name": "ordering",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Order object array via constraint schemes",
   "main": "index.js",
   "author": "Eli Doran <eli@elidoran.com>",

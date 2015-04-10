@@ -1,163 +1,43 @@
 
-defaults = require './defaults'
+had     = require('had') id:'ordering'
+needier = require 'needier'
 
 module.exports = ord =
 
   order: (options) ->
 
-    # if no options... nothing to do, send error tho
-    unless options?
-      return ord._error
-        error: 'null'
-        type: 'options'
+    if had.nullArg 'options', options
+      return had.results()
 
-    # if array is null/undefined return error
-    unless options.array?
-      return ord._error
-        error: 'null'
-        type: 'array'
+    unless options?.array? # TODO: use had.nullProp
+      return had.error error:'null', type:'options', name:'array'
 
-    # if length is zero, return it
-    if options.array.length is 0
-      return ord._result
-        array: options.array
-        sorted: options.array
-        note: 'empty input array'
-        options: options
+    needs = needier()
 
-    # else length is greater than 1, process it
-    # to "process" it, we need to look at the options
-    # to see if it's something which wants to see the whole array, or each item
+    for item,index in options.array
 
-    # first, check if that info is specified in the options
-    # if it's *not*, then only check for nulls
-    switch options.method
-      when 'sorter'
-        result = ord._sorter options
+      if had.nullArg "array[#{index}]", item
+        return had.results type:'item', index:index
 
-      when 'iterator'
-        result = ord._iterator options
+      if had.nullProp 'options', item
+        return had.results type:'ordering', name:'options'
 
-      when 'alpha'
-        options.sortBy ?= 'name'
-        if not options.sortDiff
-          options.sortDiff = defaults.alphaDiff
-          setSortDiff = true
-        result = ord._arraySort options
-        if setSortDiff?
-          delete options.sortDiff
+      if had.nullProp 'id', item.options
+        return had.results type:'ordering', name:'id'
 
-      when 'numeric'
-        options.sortBy ?= 'index'
-        result = ord._arraySort options
+      need = needs.of item.options.id
 
-      else
-        # nothing specified, check for nulls, and in result note there was no
-        # method specified.
-        # add info to result before returning it
-        previousError =
-          error: 'unknown ordering method'
-          type : 'warning'
-          warning : 'only checked for nulls'
-        result = ord._check options
-        result.previousError = previousError
+      if item.options?.before?
+        for beforeId in item.options.before
+          need.are beforeId # TODO: doesn't read well like this!
 
-    return if result?.error? then ord._error result else ord._result result
+      if item.options?.after?
+        for afterId in item.options.after
+          needs.of(afterId).are item.options.id
 
-  _error: (info) -> info
-  _result: (info) -> info
+    results = needs.ordered()
 
-  # TODO: iterate in an iteration function for both null checks and iterator
-  _check: (options) ->
-    # loop array and return error for null
-    index = 0
-    checker = options.iterator ? () -> # a noop
-    result = {} # hold result as it processes
-    for item in options.array
-      if not item?
-        return ord._error
-          error: 'null'
-          type: 'item'
-          index: index
-          options: options
+    unless had.isSuccess results
+      return had.error results
 
-      # use the checker
-      result = checker item, result
-      # if there was an error, return it
-      if result?.error?
-        # add the current index
-        result.index = index
-        return ord._error result
-
-      # increment index
-      index++
-
-    # we made it, no nulls, so return result
-    return ord._result
-      sorted: options.array # not really sorted, but, no nulls
-      options: options
-
-  _sorter: (options) ->
-    # we have a function to run on the whole array.
-    # NOTE: we still check for nulls, have to do it first
-    result = ord._check options
-    # if there wasn't an error, run the sorter on it
-    if not result?.error?
-      # is the sorter specified?
-      if options?.sorter?
-        result = options.sorter options
-        if result?.error?
-          result.type ?= 'sorter'
-          result = ord._error result
-        else
-          result = ord._result result
-      else # there's no sorter... woops
-        result = ord._error
-          error: 'options.sorter not specified'
-          type: 'options'
-          options: options
-
-    # else where is an error, add any stuff to it before returning?
-
-    return result
-
-  _iterator: (options) ->
-    # we have a function to run on each item in the array.
-    # NOTE: we still check for nulls
-    result = ord._check options
-    if not result?
-      return ord._error
-        error: 'no result'
-        type: 'iterator'
-        options: options
-
-    if result.error?
-      result.options ?= options # TODO: do an extendOwn into it?
-      result.type ?= 'iterator'
-      return ord._error result
-
-    # otherwise, it's a good result, so return that
-    return ord._result result
-
-  _arraySort: (options) ->
-    options.sortOrder ?= 'asc'
-    getField = options.getField ? defaults.getField
-    if options.sortDiff?
-      diff = options.sortDiff
-    else
-      diff = if options.sortOrder is 'asc' then defaults.asc else defaults.desc
-    options.sorter = do (array=options.array, get=getField,
-      field=options.sortBy, diff=diff) ->
-        return (options) ->
-          return {
-            options: options
-            sorted: array.sort (a,b) ->
-              #return diff get(a, field), get(b, field)
-              fieldA = get a, field
-              fieldB = get b, field
-              theDiff = diff fieldA, fieldB
-              return theDiff
-          }
-    result = ord._sorter options
-    delete options.sorter # delete the sorter we added in there
-    return result
+    return had.success sorted:results.ordered

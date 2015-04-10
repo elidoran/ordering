@@ -1,157 +1,112 @@
 
 assert = require 'assert'
 ord = require '../index'
-{buildExpected, checkResult} = require './helpers'
 
-describe 'call with null/undefined object, or null/undefined array elements', ->
-  before ->
+describe 'test invalid args', ->
 
-  beforeEach 'create object and array', ->
+  describe 'test passing null', ->
 
-  it 'call with null should return null options error', ->
-    expected =
-      error:'null'
-      type:'options'
-    result = ord.order null
-    assert.deepEqual result, expected
+    it 'should return an error', ->
 
-  it 'call with undefined should return null options error', ->
-    expected =
-      error:'null'
-      type:'options'
-    result = ord.order undefined
-    assert.deepEqual result, expected
+      expected =
+        had:'ordering'
+        error:'null'
+        type :'arg'
+        name :'options'
 
-  it 'call with empty options should return an array error', ->
-    expected =
-      error: 'null'
-      type: 'array'
-    options = {}
-    result = ord.order options
-    assert.deepEqual result, expected
+      result = ord.order null
 
-  it 'call with empty array should return an empty array', ->
-    expected = buildExpected
-      array: []
-      note: 'empty input array'
-      noSortBy: true
-      noSortOrder: true
-    delete expected.options.method
+      assert.deepEqual result, expected
 
-    options =
-      array: []
-    result = ord.order options
-    checkResult result, expected
+  describe 'test passing undefined', ->
 
-  it 'call with a single element should return an array of the single element', ->
-    expected = buildExpected
-      array: [{}]
-      sorted: [{}]
-      error: 'unknown ordering method'
-      type: 'warning'
-      warning: 'only checked for nulls'
-      noSortBy: true
-      noSortOrder: true
-    delete expected.options.method
+    it 'should return an error', ->
+      expected =
+        had: 'ordering'
+        error:'null'
+        type:'arg'
+        name:'options'
 
-    options =
-      array: [{}]
-    result = ord.order options
-    checkResult result, expected
+      result = ord.order undefined
 
-  describe 'pass one null and one object', ->
-    it '[null, object] should return null item error object with index 0', ->
-      expected = buildExpected
-        array: [null, {}]
+      assert.deepEqual result, expected
+
+  describe 'test passing empty object', ->
+
+    it 'should return an error', ->
+      expected =
+        had: 'ordering'
+        error: 'null'
+        type: 'options'
+        name: 'array'
+
+      result = ord.order {}
+
+      assert.deepEqual result, expected
+
+  describe 'test passing object with null array only', ->
+
+    it 'should return an error', ->
+      expected =
+        had: 'ordering'
+        error: 'null'
+        type: 'options'
+        name: 'array'
+
+      result = ord.order array:null
+
+      assert.deepEqual result, expected
+
+  describe 'test passing item without options', ->
+
+    it 'should return an error', ->
+      expected =
+        had: 'ordering'
+        error: 'null'
+        type: 'ordering'
+        name: 'options'
+
+      result = ord.order array:[{}]
+
+      assert.deepEqual result, expected
+
+  describe 'test passing item without id', ->
+
+    it 'should return an error', ->
+      expected =
+        had: 'ordering'
+        error: 'null'
+        type: 'ordering'
+        name: 'id'
+
+      result = ord.order array:[{options:{}}]
+
+      assert.deepEqual result, expected
+
+  describe 'test null item', ->
+
+    it 'should return an error', ->
+      expected =
+        had: 'ordering'
         error: 'null'
         type: 'item'
+        name:'array[0]'
         index: 0
-        previousError:
-          error: 'unknown ordering method'
-          type: 'warning'
-          warning: 'only checked for nulls'
-        noSortBy: true
-        noSortOrder: true
-      delete expected.options.method
 
-      options =
-        array: [null, {}]
-      result = ord.order options
-      checkResult result, expected
+      result = ord.order array:[null]
 
-    it '[object, null] should return null item error object with index 1', ->
-      expected = buildExpected
-        array: [{}, null]
+      assert.deepEqual result, expected
+
+  describe 'test null second item', ->
+
+    it 'should return an error', ->
+      expected =
+        had: 'ordering'
         error: 'null'
         type: 'item'
-        index: 1
-        previousError:
-          error: 'unknown ordering method'
-          type: 'warning'
-          warning: 'only checked for nulls'
-        noSortBy: true
-        noSortOrder: true
-      delete expected.options.method
+        name:'array[1]'
+        index:1
 
-      options =
-        array: [{}, null]
-      result = ord.order options
-      checkResult result, expected
+      result = ord.order array:[{options:{id:'one'}}, null]
 
-  describe 'call with three elements, one is null', ->
-    it '[null, {}, {}] should return null item error object with index 0', ->
-      expected = buildExpected
-        array: [null, {}, {}]
-        error: 'null'
-        type: 'item'
-        index: 0
-        previousError:
-          error: 'unknown ordering method'
-          type: 'warning'
-          warning: 'only checked for nulls'
-        noSortBy: true
-        noSortOrder: true
-      delete expected.options.method
-
-      options =
-        array: [null, {}, {}]
-      result = ord.order options
-      checkResult result, expected
-
-    it '[{}, null, {}] should return null item error object with index 1', ->
-      expected = buildExpected
-        array: [{}, null, {}]
-        error: 'null'
-        type: 'item'
-        index: 0
-        previousError:
-          error: 'unknown ordering method'
-          type: 'warning'
-          warning: 'only checked for nulls'
-        noSortBy: true
-        noSortOrder: true
-      delete expected.options.method
-
-      options =
-        array: [{}, null, {}]
-      result = ord.order options
-      checkResult result, expected
-
-    it '[{}, {}, null] should return null item error object with index 2', ->
-      expected = buildExpected
-        array: [{}, {}, null]
-        error: 'null'
-        type: 'item'
-        index: 2
-        previousError:
-          error: 'unknown ordering method'
-          type: 'warning'
-          warning: 'only checked for nulls'
-        noSortBy: true
-        noSortOrder: true
-      delete expected.options.method
-
-      options =
-        array: [{}, {}, null]
-      result = ord.order options
-      checkResult result, expected
+      assert.deepEqual result, expected

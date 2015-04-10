@@ -20,5 +20,9 @@
   "devDependencies": {
     "coffee-script": "^1.9.1",
     "mocha": "^2.2.1"
+  },
+  "dependencies": {
+    "had": "^0.4.3",
+    "needier": "^0.2.3"
   }
 }

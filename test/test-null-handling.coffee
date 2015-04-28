@@ -63,7 +63,7 @@ describe 'test invalid args', ->
       expected =
         had: 'ordering'
         error: 'null'
-        type: 'ordering'
+        type: 'prop'
         name: 'options'
 
       result = ord.order array:[{}]
@@ -76,7 +76,7 @@ describe 'test invalid args', ->
       expected =
         had: 'ordering'
         error: 'null'
-        type: 'ordering'
+        type: 'prop'
         name: 'id'
 
       result = ord.order array:[{options:{}}]

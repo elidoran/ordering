@@ -16,7 +16,9 @@ module.exports = ord =
       return had.success array:options.array
 
     needs = needier()
-    things = {}
+    beforeAll = []
+    afterAll = []
+    all = {}
 
     for item,index in options.array
 
@@ -31,13 +33,41 @@ module.exports = ord =
 
       need = id:item.options.id, object:item
       need.needs = item.options.needs if item.options?.needs?
-      need.needs = item.options.after if item.options?.after?
+      if item.options?.after?
+        if item.options.after.length is 1 and item.options.after[0] is '*'
+          afterAll.push need.id
+        else
+          need.needs = item.options.after
+
+      all[id] = true for id in need.needs if need?.needs?
+
+      # track all needs added in (what about IDs in needs/before/after?)
+      all[need.id] = true
 
       needs.add need
 
       if item.options?.before?
-        for beforeId in item.options.before
-          needs.update id:beforeId, needs:[need.id], type:'combine'
+        if item.options.before.length is 1 and item.options.before[0] is '*'
+          beforeAll.push need.id
+        else
+          for beforeId in item.options.before
+            all[beforeId] = true
+            needs.update id:beforeId, needs:[need.id], type:'combine'
+
+    while beforeAll.length > 0
+      id = beforeAll[0]
+      need = needs:[id], type:'combine'
+      for own key of all when key not in beforeAll
+        need.id = key
+        needs.update need
+      beforeAll.shift()
+
+    while afterAll.length > 0
+      id = afterAll[0]
+      need = id:id, needs:[]
+      need.needs.push key for own key of all when key not in afterAll
+      afterAll.shift()
+      needs.add need
 
     results = needs.ordered()
 

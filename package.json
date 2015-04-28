@@ -18,11 +18,11 @@
   },
   "bugs": "http://github.com/elidoran/ordering/issues",
   "devDependencies": {
-    "coffee-script": "^1.9.1",
+    "coffee-script": "^1.9.2",
     "mocha": "^2.2.4"
   },
   "dependencies": {
     "had": "^0.6.0",
-    "needier": "^0.2.3"
+    "needier": "^0.4.0"
   }
 }

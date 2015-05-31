@@ -71,5 +71,17 @@ isNow = [ func1, func5, func3, func6, func4, func2 ]
 
 ### **ordering.order(options)**
 
+Orders the array, specified in property `array`, based on the `options` on each member of the array.
+
+The `options` should specify:
+
+1. `id` : a unique identifier within the members of the array
+2. `before`: an array of IDs the member should be *before* when ordered.
+3. `after`: an array of IDs the member should be *after* when ordered.
+
+When `options` is undefined an empty object will be put in its place.
+
+When `options.id` is undefined the `name` property will be used. A named function has a `name` property. If the member is missing both an `id` and a `name` then an error will be added to the result.
+   
 
 ## MIT License

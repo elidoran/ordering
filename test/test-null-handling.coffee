@@ -57,19 +57,6 @@ describe 'test invalid args', ->
 
       assert.deepEqual result, expected
 
-  describe 'test passing item without options', ->
-
-    it 'should return an error', ->
-      expected =
-        had: 'ordering'
-        error: 'null'
-        type: 'prop'
-        name: 'options'
-
-      result = ord.order array:[{}]
-
-      assert.deepEqual result, expected
-
   describe 'test passing item without id', ->
 
     it 'should return an error', ->

@@ -2,7 +2,7 @@
   "name": "ordering",
   "version": "0.4.1",
   "description": "Order object array via constraint schemes",
-  "main": "index.js",
+  "main": "lib",
   "author": "Eli Doran <eli@elidoran.com>",
   "license": "MIT",
   "scripts": {

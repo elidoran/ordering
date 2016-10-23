@@ -2,6 +2,11 @@
 assert = require 'assert'
 order = require '../../lib'
 
+describe 'test old order()', ->
+
+  it 'should be the same as the primary export object', ->
+    assert.strictEqual order.order, order
+
 describe 'test successful ordering', ->
 
   describe 'test empty array', ->

@@ -1,6 +1,6 @@
 
 assert = require 'assert'
-ord = require '../../lib'
+order = require '../../lib'
 
 describe 'test invalid args', ->
 
@@ -14,7 +14,7 @@ describe 'test invalid args', ->
         type :'arg'
         name :'options'
 
-      result = ord.order null
+      result = order null
 
       assert.deepEqual result, expected
 
@@ -27,7 +27,7 @@ describe 'test invalid args', ->
         type:'arg'
         name:'options'
 
-      result = ord.order undefined
+      result = order undefined
 
       assert.deepEqual result, expected
 
@@ -40,7 +40,7 @@ describe 'test invalid args', ->
         type: 'options'
         name: 'array'
 
-      result = ord.order {}
+      result = order {}
 
       assert.deepEqual result, expected
 
@@ -53,7 +53,7 @@ describe 'test invalid args', ->
         type: 'options'
         name: 'array'
 
-      result = ord.order array:null
+      result = order array:null
 
       assert.deepEqual result, expected
 
@@ -66,7 +66,7 @@ describe 'test invalid args', ->
         type: 'prop'
         name: 'id'
 
-      result = ord.order array:[{options:{}}]
+      result = order array:[{options:{}}]
 
       assert.deepEqual result, expected
 
@@ -80,7 +80,7 @@ describe 'test invalid args', ->
         name:'array[0]'
         index: 0
 
-      result = ord.order array:[null]
+      result = order array:[null]
 
       assert.deepEqual result, expected
 
@@ -94,6 +94,6 @@ describe 'test invalid args', ->
         name:'array[1]'
         index:1
 
-      result = ord.order array:[{options:{id:'one'}}, null]
+      result = order array:[{options:{id:'one'}}, null]
 
       assert.deepEqual result, expected

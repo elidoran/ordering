@@ -1,6 +1,6 @@
 
 assert = require 'assert'
-ord = require '../../lib'
+order = require '../../lib'
 
 describe 'test successful ordering', ->
 
@@ -13,7 +13,7 @@ describe 'test successful ordering', ->
         success: true
         array: []
 
-      result = ord.order array:[]
+      result = order array:[]
 
       assert.deepEqual result, expected
 
@@ -26,7 +26,7 @@ describe 'test successful ordering', ->
         success: true
         array: [object]
 
-      result = ord.order array:[object]
+      result = order array:[object]
 
       assert.deepEqual result, expected
 
@@ -40,7 +40,7 @@ describe 'test successful ordering', ->
         success: true
         array: [object1,object2]
 
-      result = ord.order array:[object1,object2]
+      result = order array:[object1,object2]
 
       assert.deepEqual result, expected
 
@@ -53,7 +53,7 @@ describe 'test successful ordering', ->
         success:true
         array: [object]
 
-      result = ord.order array:[object]
+      result = order array:[object]
 
       assert.deepEqual result, expected
 
@@ -67,7 +67,7 @@ describe 'test successful ordering', ->
         success: true
         array: [object1,object2]
 
-      result = ord.order array:[object2,object1]
+      result = order array:[object2,object1]
 
       assert.deepEqual result, expected
 
@@ -82,7 +82,7 @@ describe 'test successful ordering', ->
         success: true
         array: [object1,object2,object3]
 
-      result = ord.order array:[object2,object3,object1]
+      result = order array:[object2,object3,object1]
 
       assert.deepEqual result, expected
 
@@ -97,7 +97,7 @@ describe 'test successful ordering', ->
         success: true
         array: [object1,object2,object3]
 
-      result = ord.order array:[object2,object3,object1]
+      result = order array:[object2,object3,object1]
 
       assert.deepEqual result, expected
 
@@ -112,7 +112,7 @@ describe 'test successful ordering', ->
           success: true
           array: [object1]
 
-        result = ord.order array:[object1]
+        result = order array:[object1]
 
         assert.deepEqual result, expected
 
@@ -126,7 +126,7 @@ describe 'test successful ordering', ->
           success: true
           array: [object1,object2]
 
-        result = ord.order array:[object2,object1]
+        result = order array:[object2,object1]
 
         assert.deepEqual result, expected
 
@@ -141,7 +141,7 @@ describe 'test successful ordering', ->
           success: true
           array: [object1,object2,object3]
 
-        result = ord.order array:[object2,object3,object1]
+        result = order array:[object2,object3,object1]
 
         assert.deepEqual result, expected
 
@@ -156,7 +156,7 @@ describe 'test successful ordering', ->
           success: true
           array: [object1,object2,object3]
 
-        result = ord.order array:[object2,object3,object1]
+        result = order array:[object2,object3,object1]
 
         assert.deepEqual result, expected
 
@@ -171,7 +171,7 @@ describe 'test successful ordering', ->
           success: true
           array: [object1]
 
-        result = ord.order array:[object1]
+        result = order array:[object1]
 
         assert.deepEqual result, expected
 
@@ -185,7 +185,7 @@ describe 'test successful ordering', ->
           success: true
           array: [object1,object2]
 
-        result = ord.order array:[object2,object1]
+        result = order array:[object2,object1]
 
         assert.deepEqual result, expected
 
@@ -200,7 +200,7 @@ describe 'test successful ordering', ->
           success: true
           array: [object1,object2,object3]
 
-        result = ord.order array:[object1,object3,object2]
+        result = order array:[object1,object3,object2]
 
         assert.deepEqual result, expected
 
@@ -215,6 +215,6 @@ describe 'test successful ordering', ->
           success: true
           array: [object1,object2,object3]
 
-        result = ord.order array:[object2,object3,object1]
+        result = order array:[object2,object3,object1]
 
         assert.deepEqual result, expected

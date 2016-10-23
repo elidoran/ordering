@@ -94,3 +94,9 @@ module.exports = (options) ->
   array = (item for item in results.array when typeof item isnt 'string')
 
   return had.success array:array
+
+# used to export the primary function as 'order'.
+# now, we're exporting the order() function as the export object.
+# so, to be backwards compatible, let's make an `order` property on it
+# which calls the function.
+module.exports.order = module.exports

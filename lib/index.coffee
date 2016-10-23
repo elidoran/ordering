@@ -7,18 +7,30 @@ module.exports = (options) ->
   if had.nullArg 'options', options
     return had.results()
 
-  if had.nullProp 'array', options
+  # first, check if the options are an array
+  if Array.isArray options then array = options
+
+  # or, maybe they provided the stuff to order as individual arguments
+  # Note: we're assuming multiple args means they did...
+  else if arguments.length > 1 then array = Array.prototype.slice.call arguments
+
+  # otherwise, check if they didn't specify an `array` property
+  else if had.nullProp 'array', options
     return had.results type:'options'
 
-  unless options.array.length > 0
-    return had.success array:options.array
+  # they did, so, get it :)
+  else array = options.array
+
+  # if the array is empty then we succeed at nothing...
+  unless array.length > 0
+    return had.success array:array
 
   needs = needier()
   beforeAll = []
   afterAll = []
   all = {}
 
-  for item,index in options.array
+  for item,index in array
 
     if had.nullArg index, item # TODO: Had should support array check
       return had.results type:'item', index:index, name:"array[#{index}]"

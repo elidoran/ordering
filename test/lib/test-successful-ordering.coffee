@@ -17,7 +17,7 @@ describe 'test successful ordering', ->
 
       assert.deepEqual result, expected
 
-  describe 'test single item', ->
+  describe 'test single item in an array property', ->
 
     it 'should return array with item', ->
       object = {options:{id:'test'}}
@@ -27,6 +27,33 @@ describe 'test successful ordering', ->
         array: [object]
 
       result = order array:[object]
+
+      assert.deepEqual result, expected
+
+  describe 'test single item in an array as argument', ->
+
+    it 'should return array with item', ->
+      object = {options:{id:'test'}}
+      expected =
+        had:'ordering'
+        success: true
+        array: [object]
+
+      result = order [object]
+
+      assert.deepEqual result, expected
+
+  describe 'test two items as arguments', ->
+
+    it 'should return array with items', ->
+      object1 = {options:{id:'test1'}}
+      object2 = {options:{id:'test2'}}
+      expected =
+        had:'ordering'
+        success: true
+        array: [object1, object2]
+
+      result = order object1, object2
 
       assert.deepEqual result, expected
 

@@ -1,6 +1,6 @@
 
 assert = require 'assert'
-ord = require '../index'
+ord = require '../../lib'
 
 describe 'test successful ordering', ->
 

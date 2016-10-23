@@ -6,6 +6,7 @@
 Order array elements based on before/after constraints.
 
 See [needier](https://www.npmjs.com/package/needier) for more on how the dependencies are handled.
+
 See [had](https://www.npmjs.com/package/had) for more on how the return results/errors are produced.
 
 [Tapestry-IoC](https://tapestry.apache.org/tapestry-ioc-configuration.html#TapestryIoCConfiguration-Ordered_List) anyone?

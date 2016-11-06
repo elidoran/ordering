@@ -5,7 +5,7 @@ order = require '../../lib'
 describe 'test old order()', ->
 
   it 'should be the same as the primary export object', ->
-    assert.strictEqual order.order, order
+    assert.deepEqual order.order, order
 
 describe 'test successful ordering', ->
 

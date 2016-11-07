@@ -32,6 +32,6 @@
   },
   "dependencies": {
     "had": "^0.6.1",
-    "needier": "^0.5.0"
+    "needier": "^0.5.1"
   }
 }

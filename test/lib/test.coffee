@@ -7,6 +7,138 @@ describe 'test old order()', ->
   it 'should be the same as the primary export object', ->
     assert.deepEqual order.order, order
 
+describe 'test failed ordering', ->
+
+  describe 'with both wanting after each other', ->
+
+      object1 = options: { id:'A', after:['B'] }
+      object2 = options: { id:'B', after:['A'] }
+
+      expected =
+        had  : 'needs'
+        error: 'none without need'
+        type : 'cyclical'
+
+      result = order array:[object1, object2]
+
+      it 'should contain a cyclical error', ->
+        assert.deepEqual result, expected
+
+  describe 'with both wanting after each other, flipped', ->
+
+      object1 = options: { id:'A', after:['B'] }
+      object2 = options: { id:'B', after:['A'] }
+
+      expected =
+        had  : 'needs'
+        error: 'none without need'
+        type : 'cyclical'
+
+      result = order array:[object2, object1]
+
+      it 'should contain a cyclical error', ->
+        assert.deepEqual result, expected
+
+  describe 'with both wanting before each other', ->
+
+      object1 = options: { id:'A', before:['B'] }
+      object2 = options: { id:'B', before:['A'] }
+
+      expected =
+        had  : 'needs'
+        error: 'none without need'
+        type : 'cyclical'
+
+      result = order array:[object1, object2]
+
+      it 'should contain a cyclical error', ->
+        assert.deepEqual result, expected
+
+  describe 'with both wanting before each other, flipped', ->
+
+      object1 = options: { id:'A', before:['B'] }
+      object2 = options: { id:'B', before:['A'] }
+
+      expected =
+        had  : 'needs'
+        error: 'none without need'
+        type : 'cyclical'
+
+      result = order array:[object2, object1]
+
+      it 'should contain a cyclical error', ->
+        assert.deepEqual result, expected
+
+
+  describe 'with 2 of 3 wanting after each other', ->
+
+      object1 = options: { id:'A', after:['B'] }
+      object2 = options: { id:'B', after:['A'] }
+      object3 = options: { id:'C' }
+
+      expected =
+        had  : 'needs'
+        error: 'cyclical needs'
+        type : 'cyclical'
+        needs: [ object1, object2 ]
+
+      result = order array:[object1, object2, object3]
+
+      it 'should contain a cyclical error', ->
+        assert.deepEqual result, expected
+
+  describe 'with 2 cyclical and an extra wanting one', ->
+
+      object1 = options: { id:'A', after:['B'] }
+      object2 = options: { id:'B', after:['A'] }
+      object3 = options: { id:'C', after:['B'] }
+
+      expected =
+        had  : 'needs'
+        error: 'cyclical need'
+        type : 'cyclical'
+        name : 'B'
+
+      result = order array:[object1, object2, object3]
+
+      it 'should contain a cyclical error', ->
+        assert.deepEqual result, expected
+
+  describe 'with both wanting before each other', ->
+
+      object1 = options: { id:'A', before:['B'] }
+      object2 = options: { id:'B', before:['A'] }
+      object3 = options: { id:'C' }
+
+      expected =
+        had  : 'needs'
+        error: 'cyclical needs'
+        type : 'cyclical'
+        needs: [ object1, object2 ]
+
+      result = order array:[object1, object2, object3]
+
+      it 'should contain a cyclical error', ->
+        assert.deepEqual result, expected
+
+  describe 'with both wanting before each other,flipped', ->
+
+      object1 = options: { id:'A', before:['B'] }
+      object2 = options: { id:'B', before:['A'] }
+      object3 = options: { id:'C' }
+
+      expected =
+        had  : 'needs'
+        error: 'cyclical needs'
+        type : 'cyclical'
+        needs: [ object2, object1 ]
+
+      result = order array:[object2, object1, object3]
+
+      it 'should contain a cyclical error', ->
+        assert.deepEqual result, expected
+
+
 describe 'test successful ordering', ->
 
   describe 'test empty array', ->

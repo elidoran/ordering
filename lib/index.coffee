@@ -36,7 +36,7 @@ module.exports = (options) ->
       return had.results type:'item', index:index, name:"array[#{index}]"
 
     # if item doesn't have `options`, then set an empty one
-    unless item?.options? then item.options = {}
+    item.options ?= {}
 
     # if options doesn't have an `id` and item is a function
     # then use `function.name`

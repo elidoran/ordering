@@ -3,6 +3,15 @@
   "version": "0.5.0",
   "description": "Order object array via constraint schemes",
   "main": "lib",
+  "keywords": [
+    "order",
+    "ordered",
+    "array",
+    "constraint",
+    "dependency",
+    "before",
+    "after"
+  ],
   "author": "Eli Doran <eli@elidoran.com>",
   "license": "MIT",
   "scripts": {

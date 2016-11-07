@@ -41,7 +41,7 @@ module.exports = (options) ->
     # if options doesn't have an `id` and item is a function
     # then use `function.name`
     if not item.options?.id? and typeof item is 'function'
-      item.options.id = item?.name
+      item.options.id = item.name
 
     if had.nullProp 'id', item.options
       return had.results()
